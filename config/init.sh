@@ -25,6 +25,7 @@ done
 # source all config file
 CONFIGDIR="$DOTFILES_ROOT/config"
 CONFIGS="$(find $CONFIGDIR -name "*.sh" |grep -ve "init.sh\|setup.sh")"
+CONFIGS="$(echo $CONFIGS | tr " " "\n" | sort -n -t "-")"
 for CONFIG_FILE in $CONFIGS
 do
     source "$CONFIGDIR/$CONFIG_FILE"
