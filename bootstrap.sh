@@ -26,7 +26,7 @@ add_init() {
     FD=$(grep -Pzoe "$CFG_CONTENTS" $TARGET_FILE | tr -d "\0" )
     
     if [ -z "$FD" ]; then
-        echo -e $CFG_CONTENTS >> $TARGET_FILE
+        echo -e ${CFG_CONTENTS}\n >> $TARGET_FILE
     fi
 }
 
