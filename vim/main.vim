@@ -22,6 +22,7 @@ call plug#end()
 " configure
 set nocompatible
 syntax on          " syntax highlight
+let g:solarized_termcolors=256
 set background=dark
 colorscheme solarized
 highlight Normal ctermfg=grey ctermbg=black
