@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-DOTFILES_ROOT="$(dirname "$0")"
+source "$(dirname "$0")/common.sh"
  
-cd $DOTFILES_ROOT && git pull && setup_all.sh
+cd $DOTFILES_ROOT && git pull && ./setup_all.sh
 

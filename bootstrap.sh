@@ -1,9 +1,6 @@
-
+#!/usr/bin/env bash
 DOTFILES_ROOT="$HOME/.local/dotfiles"
-INIT_FILE="init.sh"
 DOTFILES_URL="https://github.com/dai-pch/dotfiles.git"
-# TARGET_FILE="./test"
-TARGET_FILE="$HOME/.bashrc"
 
 if [ -f "$DOTFILES_ROOT" ]; then
     echo "File $DOTFILES_ROOT already exits."
