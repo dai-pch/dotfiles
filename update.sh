@@ -1,7 +1,6 @@
-
 #!/usr/bin/env bash
 
-source "$(dirname "$0")/cfg.sh"
+DOTFILES_ROOT="$(dirname "$0")"
  
-cd $DOTFILES_ROOT && git pull
+cd $DOTFILES_ROOT && git pull && setup_all.sh
 
