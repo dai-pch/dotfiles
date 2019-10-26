@@ -8,7 +8,7 @@ fi
 # exit if not in interactive mode
 case "$-" in
     *i*) ;;
-    *) return
+    *) return;;
 esac
 
 # get dotfiles root path
