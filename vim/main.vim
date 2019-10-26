@@ -23,9 +23,9 @@ call plug#end()
 set nocompatible
 syntax on          " syntax highlight
 let g:solarized_termcolors=256
-set background=dark
+set background=light
 colorscheme solarized
-highlight Normal ctermfg=grey ctermbg=black
+" highlight Normal ctermfg=grey ctermbg=black
 set nu             " show row number
 set showcmd        " show input in normal mode
 set scrolloff=5    " distance between cursor and bottom when scroll down 
@@ -55,7 +55,7 @@ set backspace=indent,eol,start
 " key map
 let mapleader=" "
 " reload config
-cnoremap so source $MYVIMRC
+nnoremap <leader>so :source $MYVIMRC<CR>
 
 nmap <tab> >>
 nmap <S-tab> <<
