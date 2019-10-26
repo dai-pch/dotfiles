@@ -17,7 +17,7 @@ source "$(dirname "$BASH_SOURCE[0]")/../common.sh"
 # source all functions
 FUNCDIR="$DOTFILES_ROOT/functions"
 FUNCTIONS="$(ls "$FUNCDIR")"
-for FUNC_FILE in "$FUNCTIONS"
+for FUNC_FILE in $FUNCTIONS
 do
     source "$FUNCDIR/$FUNC_FILE"
 done
