@@ -22,6 +22,14 @@ do
     source "$FUNCDIR/$FUNC_FILE"
 done
 
+# set some env var
+PATH=$HOME/.local/bin:$PATH
+LIBRARY_PATH=$HOME/.local/lib:$LIBRARY_PATH
+LD_LIBRARY_PATH=$HOME/.local/lib:$LD_LIBRARY_PATH
+
+export LIBRARY_PATH="$(trim $LIBRARY_PATH ":")"
+export LD_LIBRARY_PATH="$(trim $LD_LIBRARY_PATH ":")"
+
 # source all config file
 CONFIGDIR="$DOTFILES_ROOT/config"
 CONFIGS="$(find $CONFIGDIR -name "*.sh" |grep -ve "init.sh\|setup.sh")"
@@ -45,6 +53,8 @@ if [ -n "$PATH" ]; then
     PATH=${PATH#:}
     unset old_PATH x
 fi
+# remove end :
+PATH="$(trim "$PATH" ":")"
 
 export PATH
 
