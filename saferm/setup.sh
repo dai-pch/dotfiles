@@ -9,6 +9,7 @@ if [ ! -e "$TARGET" ]; then
     fi
     cd shell-safe-rm
     git checkout 1.0.7 > /dev/null
+    mkdir -p "$(dirname $TARGET)"
     cp ./bin/rm.sh $TARGET
 fi
 
