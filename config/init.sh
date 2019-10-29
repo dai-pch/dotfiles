@@ -28,11 +28,13 @@ LIBRARY_PATH=$HOME/.local/lib:$LIBRARY_PATH
 LD_LIBRARY_PATH=$HOME/.local/lib:$LD_LIBRARY_PATH
 C_INCLUDE_PATH=$HOME/.local/include:$C_INCLUDE_PATH
 CPLUS_INCLUDE_PATH=$HOME/.local/include:$CPLUS_INCLUDE_PATH
-for dir in $(find "$HOME/.local/include" -mindepth 1 -maxdepth 1 -type d)
-do
-    C_INCLUDE_PATH="$dir:$C_INCLUDE_PATH"
-    CPLUS_INCLUDE_PATH="$dir:$CPLUS_INCLUDE_PATH"
-done
+if [ -d "$HOME/.local/include" ]; then
+    for dir in $(find "$HOME/.local/include" -mindepth 1 -maxdepth 1 -type d)
+    do
+        C_INCLUDE_PATH="$dir:$C_INCLUDE_PATH"
+        CPLUS_INCLUDE_PATH="$dir:$CPLUS_INCLUDE_PATH"
+    done
+fi
 
 export LIBRARY_PATH="$(trim $LIBRARY_PATH ":")"
 export LD_LIBRARY_PATH="$(trim $LD_LIBRARY_PATH ":")"
@@ -54,8 +56,8 @@ if [ -n "$PATH" ]; then
     while [ -n "$old_PATH" ]; do
         x=${old_PATH%%:*}      
         case $PATH: in
-           *:"$x":*) ;;         
-           *) PATH=$PATH:$x;;  
+            *:"$x":*) ;;         
+            *) PATH=$PATH:$x;;  
         esac
         old_PATH=${old_PATH#*:}
     done
