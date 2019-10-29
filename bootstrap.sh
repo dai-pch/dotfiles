@@ -15,5 +15,5 @@ fi
 
 mkdir -p $DOTFILES_ROOT
 git clone $DOTFILES_URL $DOTFILES_ROOT
-setup_all.sh
+$DOTFILES_ROOT/setup_all.sh
 
