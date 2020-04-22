@@ -113,7 +113,7 @@ nnoremap <silent> g, g,zz
 nmap <leader>w <C-w>
 " tab
 nmap <leader>tc :tabnew<CR>
-nmap <leader>te :tabedit
+nmap <leader>te :tabedit<Space>
 nmap <leader>tn gt
 nmap <leader>tp gT
 
