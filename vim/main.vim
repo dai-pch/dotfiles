@@ -42,6 +42,7 @@ endif
 " let g:plug_url_format='git@github.com:%s.git'
 call plug#begin('~/.vim/bundle')
 " Plug '' 
+Plug 'liuchengxu/vim-which-key', {'on': ['WhichKey', 'WhichKey!']}
 Plug 'flazz/vim-colorschemes' 
 Plug 'scrooloose/nerdtree',  { 'on': 'NERDTreeToggle' }
 if len(g:gutentags_modules) > 0
@@ -53,6 +54,13 @@ if len(g:gutentags_modules) > 0
         Plug 'skywind3000/gutentags_plus'
     endif
 endif
+
+" which-key
+set timeoutlen=500
+call which_key#register('<Space>', "g:which_key_map")
+let g:which_key_map = {}
+nnoremap <silent> <leader> :<c-u>WhichKey '<Space>'<CR>
+vnoremap <silent> <leader> :<c-u>WhichKeyVisual '<Space>'<CR>
 
 " markdown plugin
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
@@ -147,4 +155,13 @@ if !isdirectory(s:vim_tags)
 endif
 " change focus to quickfix window after search (optional).
 let g:gutentags_plus_switch = 1
+" discription
+let g:which_key_map.c = {
+    \ 'name' : 'tags',
+    \ 'g'    : 'looking for the difination.',
+    \ 's'    : 'looking for the reference.',
+    \ 'c'    : 'looking for the callers of this function.',
+    \ 'f'    : 'looking for the files.',
+    \ 'i'    : 'looking for the files that include current one.',
+    \ }
 
