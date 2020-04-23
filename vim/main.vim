@@ -38,6 +38,12 @@ if executable('gtags-cscope') && executable('gtags')
     let g:gutentags_modules += ['gtags_cscope']
 endif
 
+" install coc.nvim only if node exists
+let g:load_coc_nvim = 0
+if executable('node')
+    let g:load_coc_nvim = 1
+endif
+
 " plugins 
 " let g:plug_url_format='git@github.com:%s.git'
 call plug#begin('~/.vim/bundle')
@@ -53,6 +59,11 @@ if len(g:gutentags_modules) > 0
         Plug 'ludovicchabant/vim-gutentags'
         Plug 'skywind3000/gutentags_plus'
     endif
+endif
+
+" language server
+if g:load_coc_nvim
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
 endif
 
 " markdown plugin
@@ -164,4 +175,10 @@ let g:which_key_map.c = {
     \ 'f'    : 'looking for the files.',
     \ 'i'    : 'looking for the files that include current one.',
     \ }
+
+" coc.nvim
+let g:vim_path_in_dotfiles = fnamemodify(resolve(expand('<sfile>:p')), ':h')
+if g:load_coc_nvim
+    exec 'source' g:vim_path_in_dotfiles . '/coc.vim'
+endif
 
