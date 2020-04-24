@@ -168,7 +168,7 @@ endif
 let g:gutentags_plus_switch = 1
 " discription
 let g:which_key_map.c = {
-    \ 'name' : 'tags',
+    \ 'name' : '+tags',
     \ 'g'    : 'looking for the difination.',
     \ 's'    : 'looking for the reference.',
     \ 'c'    : 'looking for the callers of this function.',
