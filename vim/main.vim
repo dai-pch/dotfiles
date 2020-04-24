@@ -105,6 +105,8 @@ set cindent
 
 set backspace=indent,eol,start
 
+let mapleader=" "
+
 " Plugs config
 " which-key
 set timeoutlen=500
@@ -160,7 +162,6 @@ if g:load_coc_nvim
 endif
 
 " key map
-let mapleader=" "
 " reload config
 nnoremap <leader>so :source $MYVIMRC<CR>
 
