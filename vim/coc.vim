@@ -21,11 +21,10 @@ set signcolumn=yes
 
 let g:which_key_map.l = { 'name': '+language-server' }
 
-inoremap <silent><expr> <c-space> coc#refresh()
 " use <tab> for trigger completion and navigate to the next complete item
 function! s:check_back_space() abort
   let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~ '\s'
+  return !col || getline('.')[col - 1]  =~ '\s'
 endfunction
 
 inoremap <silent><expr> <Tab>
@@ -34,6 +33,7 @@ inoremap <silent><expr> <Tab>
       \ coc#refresh()
 " inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <C-z> coc#refresh()
 
 " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
 " position. Coc only does snippet and additional edit on confirm.
