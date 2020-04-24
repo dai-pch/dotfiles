@@ -73,3 +73,5 @@ command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organize
 " let g:vim_path_in_dotfiles = fnamemodify(resolve(expand('<sfile>:p')), ':h')
 let g:coc_config_home = g:vim_path_in_dotfiles
 
+let g:coc_global_extensions = ['coc-json']
+
