@@ -176,6 +176,7 @@ nnoremap <silent> g, g,zz
 
 " window
 nmap <leader>w <C-w>
+
 " tab
 nmap <leader>tc :tabnew<CR>
 nmap <leader>te :tabedit<Space>
@@ -187,5 +188,14 @@ let g:which_key_map.t = {
             \ 'e': 'open file',
             \ 'n': 'next tab',
             \ 'p': 'previous tab',
+            \ }
+
+" jump
+nnoremap <leader>jp <C-o>
+nnoremap <leader>jn <C-i>
+let g:which_key_map.j = {
+            \ 'name': '+jump',
+            \ 'n': 'next',
+            \ 'p': 'previous',
             \ }
 
