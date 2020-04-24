@@ -64,6 +64,7 @@ endif
 " language server
 if g:load_coc_nvim
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
+    Plug 'honza/vim-snippets'
 endif
 
 " markdown plugin

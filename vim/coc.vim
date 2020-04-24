@@ -29,6 +29,7 @@ endfunction
 
 inoremap <silent><expr> <Tab>
       \ pumvisible() ? "\<C-n>" :
+      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
       \ <SID>check_back_space() ? "\<Tab>" :
       \ coc#refresh()
 " inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
@@ -72,6 +73,13 @@ command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organize
 " coc-settings
 " let g:vim_path_in_dotfiles = fnamemodify(resolve(expand('<sfile>:p')), ':h')
 let g:coc_config_home = g:vim_path_in_dotfiles
+call coc#config('snippets.ultisnips.directories', [
+            \ "UltiSnips",
+            \ g:vim_path_in_dotfiles . 'snippets'
+            \ ])
 
-let g:coc_global_extensions = ['coc-json']
+let g:coc_global_extensions = ['coc-json', 'coc-snippets']
+
+let g:coc_snippet_next = '<Tab>'
+let g:coc_snippet_prev = '<S-Tab>'
 
