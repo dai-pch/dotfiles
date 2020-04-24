@@ -104,30 +104,6 @@ set cindent
 
 set backspace=indent,eol,start
 
-" key map
-let mapleader=" "
-" reload config
-nnoremap <leader>so :source $MYVIMRC<CR>
-
-nmap <tab> >>
-nmap <S-tab> <<
-vmap <tab> >gv
-vmap <S-tab> <gv
-
-nnoremap <leader>o mto<Esc>`t
-nnoremap <leader>O mtO<Esc>`t
-
-nnoremap <silent> g; g;zz
-nnoremap <silent> g, g,zz
-
-" window
-nmap <leader>w <C-w>
-" tab
-nmap <leader>tc :tabnew<CR>
-nmap <leader>te :tabedit<Space>
-nmap <leader>tn gt
-nmap <leader>tp gT
-
 " Plugs config
 " which-key
 set timeoutlen=500
@@ -181,4 +157,35 @@ let g:vim_path_in_dotfiles = fnamemodify(resolve(expand('<sfile>:p')), ':h')
 if g:load_coc_nvim
     exec 'source' g:vim_path_in_dotfiles . '/coc.vim'
 endif
+
+" key map
+let mapleader=" "
+" reload config
+nnoremap <leader>so :source $MYVIMRC<CR>
+
+nmap <tab> >>
+nmap <S-tab> <<
+vmap <tab> >gv
+vmap <S-tab> <gv
+
+nnoremap <leader>o mto<Esc>`t
+nnoremap <leader>O mtO<Esc>`t
+
+nnoremap <silent> g; g;zz
+nnoremap <silent> g, g,zz
+
+" window
+nmap <leader>w <C-w>
+" tab
+nmap <leader>tc :tabnew<CR>
+nmap <leader>te :tabedit<Space>
+nmap <leader>tn gt
+nmap <leader>tp gT
+let g:which_key_map.t = {
+            \ 'name': '+tab',
+            \ 'c': 'create new tab',
+            \ 'e': 'open file',
+            \ 'n': 'next tab',
+            \ 'p': 'previous tab',
+            \ }
 
