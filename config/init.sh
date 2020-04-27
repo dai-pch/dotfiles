@@ -16,10 +16,10 @@ source "$(dirname "$BASH_SOURCE[0]")/../common.sh"
 
 # source all functions
 FUNCDIR="$DOTFILES_ROOT/functions"
-FUNCTIONS="$(ls "$FUNCDIR")"
+FUNCTIONS="$(find "$FUNCDIR" -maxdepth 1 -name "*.sh")"
 for FUNC_FILE in $FUNCTIONS
 do
-    source "$FUNCDIR/$FUNC_FILE"
+    source "$FUNC_FILE"
 done
 
 # set some env var
@@ -43,11 +43,11 @@ export CPLUS_INCLUDE_PATH="$(trim $CPLUS_INCLUDE_PATH ":")"
 
 # source all config file
 CONFIGDIR="$DOTFILES_ROOT/config"
-CONFIGS="$(find $CONFIGDIR -name "*.sh" |grep -ve "init.sh\|setup.sh")"
+CONFIGS="$(find $CONFIGDIR -maxdepth 1 -name "*.sh" |grep -ve "init.sh\|setup.sh")"
 CONFIGS="$(echo $CONFIGS | tr " " "\n" | sort -n -t "-")"
 for CONFIG_FILE in $CONFIGS
 do
-    source "$CONFIGDIR/$CONFIG_FILE"
+    source "$CONFIG_FILE"
 done
 
 # remove redundant items in PATH
