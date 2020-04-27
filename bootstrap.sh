@@ -14,6 +14,6 @@ if [ -d "$DOTFILES_ROOT" ]; then
 fi
 
 mkdir -p $DOTFILES_ROOT
-git clone $DOTFILES_URL $DOTFILES_ROOT
+git clone --recursive $DOTFILES_URL $DOTFILES_ROOT
 $DOTFILES_ROOT/setup_all.sh
 
