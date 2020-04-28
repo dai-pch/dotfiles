@@ -41,6 +41,8 @@ export LD_LIBRARY_PATH="$(trim $LD_LIBRARY_PATH ":")"
 export C_INCLUDE_PATH="$(trim $C_INCLUDE_PATH ":")"
 export CPLUS_INCLUDE_PATH="$(trim $CPLUS_INCLUDE_PATH ":")"
 
+test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)
+
 # source all config file
 CONFIGDIR="$DOTFILES_ROOT/config"
 CONFIGS="$(find $CONFIGDIR -maxdepth 1 -name "*.sh" |grep -ve "init.sh\|setup.sh")"
