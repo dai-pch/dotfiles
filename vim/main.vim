@@ -50,6 +50,7 @@ call plug#begin('~/.vim/bundle')
 " Plug '' 
 Plug 'liuchengxu/vim-which-key', {'on': ['WhichKey', 'WhichKey!', 'WhichKeyVisual', 'WhichKeyVisual!']}
 Plug 'flazz/vim-colorschemes' 
+Plug 'moll/vim-bbye', {'on': ['Bdelete', 'Bwipeout']}
 Plug 'scrooloose/nerdtree',  { 'on': 'NERDTreeToggle' }
 if len(g:gutentags_modules) > 0
     if s:uname != 'windows'
@@ -178,6 +179,26 @@ nnoremap <silent> g, g,zz
 
 " window
 nmap <leader>w <C-w>
+
+" buffer operation
+nmap <leader>bl :<C-u>ls<CR>
+nmap <leader>bn :<C-u>bnext<CR>
+nmap <leader>bp :<C-u>bprev<CR>
+nmap <leader>bg :<C-u>ls<CR>:buffer<Space>
+nmap <leader>bd :<C-u>Bdelete<CR>
+nmap <leader>bt :<C-u>exe "tab sb" . v:count<CR>
+nmap <leader>- <Plug>AirlineSelectPrevTab
+nmap <leader>+ <Plug>AirlineSelectNextTab
+" discription
+let g:which_key_map.b = {
+    \ 'name' : '+buffer',
+    \ 'l'    : 'toggle buffer list.',
+    \ 'n'    : 'goto next buffer.',
+    \ 'p'    : 'goto previous buffer.',
+    \ 'g'    : 'goto buffer of given id.',
+    \ 'd'    : 'delete current buffer.',
+    \ 't'    : 'edit buffer [N] in a new tab.',
+    \ }
 
 " tab
 nmap <leader>tc :tabnew<CR>
