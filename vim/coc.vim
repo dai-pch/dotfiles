@@ -70,6 +70,40 @@ command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 " Add `:OR` command for organize imports of the current buffer.
 command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
 
+" coclist key maps
+" show all coclist sources
+nnoremap <silent> <space>fl  :<C-u>CocList<cr>
+" Show all diagnostics.
+nnoremap <silent> <space>fa  :<C-u>CocList diagnostics<cr>
+" Manage extensions.
+nnoremap <silent> <space>fe  :<C-u>CocList extensions<cr>
+" Show commands.
+nnoremap <silent> <space>fc  :<C-u>CocList commands<cr>
+" Find symbol of current document.
+nnoremap <silent> <space>fo  :<C-u>CocList outline<cr>
+" Search workspace symbols.
+nnoremap <silent> <space>fs  :<C-u>CocList -I symbols<cr>
+" Search workspace files.
+nnoremap <silent> <space>ff  :<C-u>CocList files<cr>
+" Do default action for next item.
+" nnoremap <silent> <space>j  :<C-u>CocNext<CR>
+" Do default action for previous item.
+" nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
+" Resume latest coc list.
+nnoremap <silent> <space>fr  :<C-u>CocListResume<CR>
+let g:which_key_map.f = {
+    \ 'name' : '+CocList',
+    \ 'l'    : 'list all sources.',
+    \ 'a'    : 'list diagnostics.',
+    \ 'e'    : 'list extensions.',
+    \ 'c'    : 'list commands.',
+    \ 'o'    : 'list symbols of current document.',
+    \ 's'    : 'list all symbols.',
+    \ 'f'    : 'list files.',
+    \ 'r'    : 'resume last list.',
+    \ }
+
+
 " coc-settings
 " let g:vim_path_in_dotfiles = fnamemodify(resolve(expand('<sfile>:p')), ':h')
 let g:coc_config_home = g:vim_path_in_dotfiles
@@ -78,7 +112,7 @@ call coc#config('snippets.ultisnips.directories', [
             \ g:vim_path_in_dotfiles . 'snippets'
             \ ])
 
-let g:coc_global_extensions = ['coc-json', 'coc-snippets']
+let g:coc_global_extensions = ['coc-lists', 'coc-json', 'coc-snippets']
 
 let g:coc_snippet_next = '<Tab>'
 let g:coc_snippet_prev = '<S-Tab>'
