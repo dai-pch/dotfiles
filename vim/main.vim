@@ -231,3 +231,11 @@ let g:which_key_map.j = {
             \ 'p': 'previous',
             \ }
 
+" scroll
+nnoremap <silent> <S-k> <C-y>
+nnoremap <silent> <S-j> <C-e>
+
+" move on buffer
+nmap <silent> <S-h> <Space>bp
+nmap <silent> <S-l> <Space>bn
+
