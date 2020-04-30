@@ -119,7 +119,7 @@ vnoremap <silent> <leader> :<c-u>WhichKeyVisual '<Space>'<CR>
 
 " NERDTree
 let NERDTreeShowHidden=1
-map <leader>d :NERDTreeToggle<CR>
+map <silent> <leader>d :<C-u>NERDTreeToggle<CR>
 
 " gtags
 let $GTAGSLABEL = 'native'
@@ -187,7 +187,14 @@ nnoremap <silent> g; g;zz
 nnoremap <silent> g, g,zz
 
 " window
-nmap <leader>w <C-w>
+nnoremap <leader>w <C-w>
+let g:which_key_map.w = {
+            \ 'name': '+window',
+            \ 'h'   : 'focus on the left window',
+            \ 'l'   : 'focus on the right window',
+            \ 'k'   : 'focus on the upward window',
+            \ 'j'   : 'focus on the downward window',
+            \ }
 
 " buffer operation
 nmap <leader>bl :<C-u>ls<CR>
