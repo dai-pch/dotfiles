@@ -50,6 +50,7 @@ call plug#begin('~/.vim/bundle')
 " Plug '' 
 Plug 'liuchengxu/vim-which-key', {'on': ['WhichKey', 'WhichKey!', 'WhichKeyVisual', 'WhichKeyVisual!']}
 Plug 'flazz/vim-colorschemes' 
+Plug 'vim-airline/vim-airline'
 Plug 'moll/vim-bbye', {'on': ['Bdelete', 'Bwipeout']}
 Plug 'scrooloose/nerdtree',  { 'on': 'NERDTreeToggle' }
 if len(g:gutentags_modules) > 0
@@ -161,6 +162,14 @@ let g:vim_path_in_dotfiles = fnamemodify(resolve(expand('<sfile>:p')), ':h')
 if g:load_coc_nvim
     exec 'source' g:vim_path_in_dotfiles . '/coc.vim'
 endif
+
+" aireline
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#bufferline#enabled = 1
+let g:airline#extensions#tabline#show_tabs = 0
+let g:airline#extensions#tabline#buffer_idx_mode = 1
+let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+
 
 " key map
 " reload config
