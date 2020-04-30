@@ -48,7 +48,7 @@ endif
 " let g:plug_url_format='git@github.com:%s.git'
 call plug#begin('~/.vim/bundle')
 " Plug '' 
-Plug 'liuchengxu/vim-which-key' ", {'on': ['WhichKey', 'WhichKey!']}
+Plug 'liuchengxu/vim-which-key', {'on': ['WhichKey', 'WhichKey!', 'WhichKeyVisual', 'WhichKeyVisual!']}
 Plug 'flazz/vim-colorschemes' 
 Plug 'scrooloose/nerdtree',  { 'on': 'NERDTreeToggle' }
 if len(g:gutentags_modules) > 0
@@ -110,7 +110,7 @@ let mapleader=" "
 " Plugs config
 " which-key
 set timeoutlen=500
-call which_key#register('<Space>', "g:which_key_map")
+autocmd! User vim-which-key call which_key#register('<Space>', 'g:which_key_map')
 let g:which_key_map = {}
 nnoremap <silent> <leader> :<c-u>WhichKey '<Space>'<CR>
 vnoremap <silent> <leader> :<c-u>WhichKeyVisual '<Space>'<CR>
