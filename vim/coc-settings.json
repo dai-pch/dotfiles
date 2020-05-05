@@ -5,4 +5,5 @@
         ".projections.json",
         ".root"
     ],
+    "diagnostic.checkCurrentLine": true
 }
