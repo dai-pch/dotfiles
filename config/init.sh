@@ -21,6 +21,9 @@ fi
 # source all functions
 FUNCDIR="$DOTFILES_ROOT/functions"
 FUNCTIONS="$(find "$FUNCDIR" -maxdepth 1 -name "*.sh")"
+if [ ! -z $ZSH_VERSION ]; then
+    IFS=$'\n' FUNCTIONS=($(echo $FUNCTIONS))
+fi
 for FUNC_FILE in $FUNCTIONS
 do
     source "$FUNC_FILE"
