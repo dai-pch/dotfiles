@@ -1,4 +1,9 @@
 #/usr/bin/env bash
+source "$(dirname "$BASH_SOURCE[0]")/../common.sh"
+
+if [ -z $(which brew) ]; then
+    $DOTFILES_ROOT/brew/install.sh
+fi
 
 brew install grep
 
