@@ -11,7 +11,8 @@ add_to_file() {
     fi
 
     # find out if contents already exists
-    local FD=$(grep -Pzoe "$CFG_CONTENTS" $TARGET_FILE | tr -d "\0" )
+    REGEX=":a;N;\$!ba;s/.*\(${CFG_CONTENTS//\//\\/}\).*/\1/p"
+    local FD=$(cat $TARGET_FILE | sed -n "$REGEX" | tr -d "\0" )
 
     if [ -z "$FD" ]; then
         echo -e "${CFG_CONTENTS}\n" >> "$TARGET_FILE"
