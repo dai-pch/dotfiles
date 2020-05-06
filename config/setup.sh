@@ -8,12 +8,13 @@ INIT_FILE="config/init.sh"
 
 # setup rc file
 CONTENTS="##### Added by dotfiles bootstrap #####\nsource $DOTFILES_ROOT/$INIT_FILE"
+
 case $(get_shell_type) in
     bash*)
-        add_to_file "$HOME/.bashrc" $CONTENTS
+        add_to_file "$HOME/.bashrc" "$CONTENTS"
         ;;
     zsh*)
-        add_to_file "$HOME/.zshrc" $CONTENTS
+        add_to_file "$HOME/.zshrc" "$CONTENTS"
         ;;
     *)
         echo "Unsupported shell type."
