@@ -12,7 +12,11 @@ case "$-" in
 esac
 
 # get dotfiles root path
-source "$(dirname "$BASH_SOURCE[0]")/../common.sh"
+if [ ! -z $BASH_VERSION ]; then
+    source "$(dirname "$BASH_SOURCE[0]")/../common.sh"
+elif [ ! -z $ZSH_VERSION ]; then
+    source "$(dirname "${(%):-%N}")/../common.sh"
+fi
 
 # source all functions
 FUNCDIR="$DOTFILES_ROOT/functions"
