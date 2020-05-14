@@ -1,18 +1,28 @@
-# Run Homebrew/Linuxbrew main program
-brew() {
-    local LOCAL_PATH="$HOME/.local/bin"
-    local BREW_PATH=""
+# get directory path of brew binary
+get_brew_dir() {
+    local BREW_DIR=""
     local ROOT1="$HOME/.linuxbrew/bin"
     local ROOT2="/home/linuxbrew/.linuxbrew/bin"
     local ROOT3="/usr/local/bin"
     # if file not exists, create file first
     if [[ -x "$ROOT1/brew" ]]; then
-        BREW_PATH=$ROOT1
+        BREW_DIR=$ROOT1
     elif [[ -x "$ROOT2/brew" ]]; then
-        BREW_PATH=$ROOT2
+        BREW_DIR=$ROOT2
     elif [[ -x "$ROOT3/brew" ]]; then
-        BREW_PATH=$ROOT3
+        BREW_DIR=$ROOT3
     else
+        BREW_DIR=
+    fi
+    echo $BREW_DIR
+}
+
+# Run Homebrew/Linuxbrew main program
+brew() {
+    local LOCAL_PATH="$HOME/.local/bin"
+    local BREW_PATH="$(get_brew_dir)"
+    # if file not exists, create file first
+    if [ -z "$BREW_PATH" ]; then
         echo Error: brew not found.
         return 1
     fi
