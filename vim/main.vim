@@ -175,10 +175,10 @@ let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 " reload config
 nnoremap <leader>so :source $MYVIMRC<CR>
 
-nmap <tab> >>
-nmap <S-tab> <<
-vmap <tab> >gv
-vmap <S-tab> <gv
+nnoremap <tab> >>
+nnoremap <S-tab> <<
+vnoremap <tab> >gv
+vnoremap <S-tab> <gv
 
 nnoremap <leader>o mto<Esc>`t
 nnoremap <leader>O mtO<Esc>`t
