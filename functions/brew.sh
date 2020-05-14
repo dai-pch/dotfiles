@@ -1,5 +1,6 @@
 # Run Homebrew/Linuxbrew main program
 brew() {
+    local LOCAL_PATH="$HOME/.local/bin"
     local BREW_PATH=""
     local ROOT1="$HOME/.linuxbrew/bin"
     local ROOT2="/home/linuxbrew/.linuxbrew/bin"
@@ -13,9 +14,31 @@ brew() {
         BREW_PATH=$ROOT3
     else
         echo Error: brew not found.
-        exit 1
+        return 1
     fi
 
     PATH="$BREW_PATH:$PATH" $BREW_PATH/brew "$@"
+    local RET=$?
+    if [ $RET -ne 0 ]; then
+        echo Run brew error.
+        return $RET
+    fi
+    local FORMULARS=${@:2}
+    # on install
+    for formular in $FORMULARS; do
+        if [[ ! $formular == "-"* ]]; then
+            if [[ "install" == "$1" ]]; then
+                if [ ! -x "$LOCAL_PATH/$formular" ]; then
+                    ln -s "$BREW_PATH/$formular" "$LOCAL_PATH/$formular"
+                    [ $? -eq 0 ] && echo Symlink created for $formular.
+                fi
+            elif [[ "uninstall" == "$1" ]]; then
+                if [ -L "$LOCAL_PATH/$formular" ]; then
+                    unlink "$LOCAL_PATH/$formular"
+                    [ $? -eq 0 ] && echo Remove $formular.
+                fi
+            fi
+        fi
+    done
 }
 
