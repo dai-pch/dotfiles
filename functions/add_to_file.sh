@@ -11,8 +11,8 @@ add_to_file() {
     fi
 
     # find out if contents already exists
-    REGEX=":a;N;\$!ba;s/.*\\(${CFG_CONTENTS//\//\\/}\\).*/\\1/p"
-    local FD=$(cat $TARGET_FILE | sed -n "$REGEX" | tr -d "\0" )
+    local REGEX="s/.*\\(${CFG_CONTENTS//\//\\/}\\).*/\\1/p"
+    local FD=$(cat $TARGET_FILE | sed -n -e ":a" -e "N" -e '$!ba' -e "$REGEX" | tr -d "\0" )
 
     if [ -z "$FD" ]; then
         echo -e "${CFG_CONTENTS}\n" >> "$TARGET_FILE"
