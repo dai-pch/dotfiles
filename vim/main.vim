@@ -53,6 +53,7 @@ Plug 'flazz/vim-colorschemes'
 Plug 'vim-airline/vim-airline'
 Plug 'moll/vim-bbye', {'on': ['Bdelete', 'Bwipeout']}
 Plug 'scrooloose/nerdtree',  { 'on': 'NERDTreeToggle' }
+Plug 'https://tpope.io/vim/fugitive.git'
 if len(g:gutentags_modules) > 0
     if s:uname != 'windows'
         Plug 'ludovicchabant/vim-gutentags'
