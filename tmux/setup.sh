@@ -6,5 +6,7 @@ source $DOTFILES_ROOT/functions/add_to_file.sh
 CONF_FILE="tmux/tmux.conf"
 
 # setup bashrc
-add_to_file "$HOME/.tmux.conf" "##### Added by dotfiles bootstrap #####\nsource-file $DOTFILES_ROOT/$CONF_FILE"
+if [ ! -z "$(which tmux)" ]; then
+    add_to_file "$HOME/.tmux.conf" "##### Added by dotfiles bootstrap #####\nsource-file $DOTFILES_ROOT/$CONF_FILE"
+fi
 
