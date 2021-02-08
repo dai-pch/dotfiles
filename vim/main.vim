@@ -8,7 +8,7 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 "----------------------------------------------------------------------
-" system detection 
+" system detection
 "----------------------------------------------------------------------
 if exists('g:asc_uname')
     let s:uname = g:asc_uname
@@ -44,16 +44,17 @@ if executable('node')
     let g:load_coc_nvim = 1
 endif
 
-" plugins 
+" plugins
 " let g:plug_url_format='git@github.com:%s.git'
 call plug#begin('~/.vim/bundle')
-" Plug '' 
+" Plug ''
 Plug 'liuchengxu/vim-which-key', {'on': ['WhichKey', 'WhichKey!', 'WhichKeyVisual', 'WhichKeyVisual!']}
-Plug 'flazz/vim-colorschemes' 
+Plug 'flazz/vim-colorschemes'
 Plug 'vim-airline/vim-airline'
 Plug 'moll/vim-bbye', {'on': ['Bdelete', 'Bwipeout']}
 Plug 'scrooloose/nerdtree',  { 'on': 'NERDTreeToggle' }
 Plug 'https://tpope.io/vim/fugitive.git'
+" Plug 'fatih/vim-go', {'do': ':GoUpdateBinaries'}
 if len(g:gutentags_modules) > 0
     if s:uname != 'windows'
         Plug 'ludovicchabant/vim-gutentags'
@@ -70,6 +71,9 @@ if g:load_coc_nvim
     Plug 'honza/vim-snippets'
 endif
 
+" Debug
+Plug 'puremourning/vimspector'
+
 " markdown plugin
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 Plug 'junegunn/goyo.vim', { 'for': 'markdown' }
@@ -79,12 +83,12 @@ call plug#end()
 set nocompatible
 syntax on          " syntax highlight
 let g:solarized_termcolors=256
-set background=light
+set background=dark
 colorscheme solarized
 " highlight Normal ctermfg=grey ctermbg=black
 set nu             " show row number
 set showcmd        " show input in normal mode
-set scrolloff=5    " distance between cursor and bottom when scroll down 
+set scrolloff=5    " distance between cursor and bottom when scroll down
 
 set autoread
 
@@ -171,79 +175,9 @@ let g:airline#extensions#tabline#show_tabs = 0
 let g:airline#extensions#tabline#buffer_idx_mode = 1
 let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 
+" short cuts
+exec 'source' g:vim_path_in_dotfiles . '/short-cut.vim'
 
-" key map
-" reload config
-nnoremap <leader>so :source $MYVIMRC<CR>
-
-nnoremap <tab> >>
-nnoremap <S-tab> <<
-vnoremap <tab> >gv
-vnoremap <S-tab> <gv
-
-nnoremap <leader>o mto<Esc>`t
-nnoremap <leader>O mtO<Esc>`t
-
-nnoremap <silent> g; g;zz
-nnoremap <silent> g, g,zz
-
-" window
-nnoremap <leader>w <C-w>
-let g:which_key_map.w = {
-            \ 'name': '+window',
-            \ 'h'   : 'focus on the left window',
-            \ 'l'   : 'focus on the right window',
-            \ 'k'   : 'focus on the upward window',
-            \ 'j'   : 'focus on the downward window',
-            \ }
-
-" buffer operation
-nmap <leader>bl :<C-u>ls<CR>
-nmap <leader>bn :<C-u>bnext<CR>
-nmap <leader>bp :<C-u>bprev<CR>
-nmap <leader>bg :<C-u>ls<CR>:buffer<Space>
-nmap <leader>bd :<C-u>Bdelete<CR>
-nmap <leader>bt :<C-u>exe "tab sb" . v:count<CR>
-nmap <leader>- <Plug>AirlineSelectPrevTab
-nmap <leader>+ <Plug>AirlineSelectNextTab
-" discription
-let g:which_key_map.b = {
-    \ 'name' : '+buffer',
-    \ 'l'    : 'toggle buffer list.',
-    \ 'n'    : 'goto next buffer.',
-    \ 'p'    : 'goto previous buffer.',
-    \ 'g'    : 'goto buffer of given id.',
-    \ 'd'    : 'delete current buffer.',
-    \ 't'    : 'edit buffer [N] in a new tab.',
-    \ }
-
-" tab
-nmap <leader>tc :tabnew<CR>
-nmap <leader>te :tabedit<Space>
-nmap <leader>tn gt
-nmap <leader>tp gT
-let g:which_key_map.t = {
-            \ 'name': '+tab',
-            \ 'c': 'create new tab',
-            \ 'e': 'open file',
-            \ 'n': 'next tab',
-            \ 'p': 'previous tab',
-            \ }
-
-" jump
-nnoremap <leader>jp <C-o>
-nnoremap <leader>jn <C-i>
-let g:which_key_map.j = {
-            \ 'name': '+jump',
-            \ 'n': 'next',
-            \ 'p': 'previous',
-            \ }
-
-" scroll
-nnoremap <silent> <S-k> <C-y>
-nnoremap <silent> <S-j> <C-e>
-
-" move on buffer
-nmap <silent> <S-h> <Space>bp
-nmap <silent> <S-l> <Space>bn
-
+" languages
+exec 'source' g:vim_path_in_dotfiles . '/language-common.vim'
+exec 'source' g:vim_path_in_dotfiles . '/golang.vim'
