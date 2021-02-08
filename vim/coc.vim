@@ -62,7 +62,7 @@ let g:which_key_map.l.i = 'organize import'
 
 nmap <leader>lf  <Plug>(coc-format)
 vmap <leader>lf  <Plug>(coc-format-current)
-let g:which_key_map.l.x = 'fix'
+let g:which_key_map.l.x = 'format'
 
 " Apply AutoFix to problem on the current line.
 nmap <leader>lx  <Plug>(coc-fix-current)
@@ -94,6 +94,7 @@ nnoremap <silent> <leader>fs  :<C-u>CocList -I symbols<cr>
 nnoremap <silent> <leader>ff  :<C-u>CocList files<cr>
 " Search using grep.
 nnoremap <silent> <leader>fg  :<C-u>CocList grep<cr>
+let g:which_key_map.f.g = 'list using grep'
 " Do default action for next item.
 " nnoremap <silent> <leader>j  :<C-u>CocNext<CR>
 " Do default action for previous item.

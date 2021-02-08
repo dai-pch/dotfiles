@@ -78,21 +78,3 @@ vmap <silent> <leader>y :w! ~/.vimbuffer<CR>
 nmap <silent> <leader>yy :.w! ~/.vimbuffer<CR>
 " " paste from buffer
 map <silent> <leader>p :r ~/.vimbuffer<CR>
-
-" coc short cuts
-if g:load_coc_nvim
-    nmap <leader>lx  <Plug>(coc-fix-current)
-    let g:which_key_map.l.x = 'fix'
-
-    nmap <leader>lf  <Plug>(coc-format)
-    vmap <leader>lf  <Plug>(coc-format-selected)
-    let g:which_key_map.l.f = 'format'
-
-    nmap <leader>li :<C-u>OR<CR>
-    let g:which_key_map.l.i = 'Organize imports'
-
-    " Search workspace files.
-    nnoremap <silent> <space>fg  :<C-u>CocList grep<cr>
-    let g:which_key_map.f.g = 'list using grep'
-endif
-
