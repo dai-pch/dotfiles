@@ -94,7 +94,6 @@ nnoremap <silent> <leader>fs  :<C-u>CocList -I symbols<cr>
 nnoremap <silent> <leader>ff  :<C-u>CocList files<cr>
 " Search using grep.
 nnoremap <silent> <leader>fg  :<C-u>CocList grep<cr>
-let g:which_key_map.f.g = 'list using grep'
 " Do default action for next item.
 " nnoremap <silent> <leader>j  :<C-u>CocNext<CR>
 " Do default action for previous item.
@@ -111,6 +110,7 @@ let g:which_key_map.f = {
     \ 's'    : 'list all symbols.',
     \ 'f'    : 'list files.',
     \ 'r'    : 'resume last list.',
+    \ 'g'    : 'list using grep',
     \ }
 
 
