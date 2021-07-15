@@ -15,4 +15,4 @@ add_to_file "$HOME/.vimrc" "\"##### Added by dotfiles bootstrap #####\nsource $D
 # add vimspector configuration
 VIMSPECTOR_PATH="$HOME/.vim/bundle/vimspector"
 mkdir -p $VIMSPECTOR_PATH
-cp -r $DOTFILES_ROOT/vim/vimspector_config $VIMSPECTOR_PATH/configurations/
+cp -r $DOTFILES_ROOT/vim/vimspector_config/* $VIMSPECTOR_PATH/configurations/
