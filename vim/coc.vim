@@ -19,6 +19,8 @@ set shortmess+=c
 " diagnostics appear/become resolved.
 set signcolumn=yes
 
+call coc#add_extension('coc-go', 'coc-rust-analyzer') " , 'coc-tsserver')
+
 let g:which_key_map.l = { 'name': '+language-server' }
 
 " use <tab> for trigger completion and navigate to the next complete item
@@ -48,7 +50,7 @@ endif
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
+nmap <silent> gr <Plug>(coc-references-used)
 
 " Highlight the symbol and its references when holding the cursor.
 autocmd CursorHold * silent call CocActionAsync('highlight')
@@ -67,6 +69,18 @@ let g:which_key_map.l.x = 'format'
 " Apply AutoFix to problem on the current line.
 nmap <leader>lx  <Plug>(coc-fix-current)
 let g:which_key_map.l.x = 'fix'
+
+nmap <leader>la <Plug>(coc-codeaction-line)
+let g:which_key_map.l.a = 'code-action'
+
+nmap <leader>lv <Plug>(coc-range-select)
+let g:which_key_map.l.v = 'range-select'
+
+nmap <leader>lb <Plug>(coc-range-select-backward)
+let g:which_key_map.l.b = 'range-select-backward'
+
+nmap <leader>lg  :CocCommand go.impl.cursor<cr>
+let g:which_key_map.l.g = 'generate interface'
 
 " Add `:Format` command to format current buffer.
 command! -nargs=0 Format :call CocAction('format')

@@ -51,10 +51,18 @@ call plug#begin('~/.vim/bundle')
 Plug 'liuchengxu/vim-which-key', {'on': ['WhichKey', 'WhichKey!', 'WhichKeyVisual', 'WhichKeyVisual!']}
 Plug 'flazz/vim-colorschemes'
 Plug 'vim-airline/vim-airline'
+Plug 'tpope/vim-abolish'
 Plug 'moll/vim-bbye', {'on': ['Bdelete', 'Bwipeout']}
 Plug 'scrooloose/nerdtree',  { 'on': 'NERDTreeToggle' }
 Plug 'https://tpope.io/vim/fugitive.git'
+Plug 'solarnz/thrift.vim', {'for': ['thrift']}
 " Plug 'fatih/vim-go', {'do': ':GoUpdateBinaries'}
+" language server
+if g:load_coc_nvim
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
+    Plug 'honza/vim-snippets'
+endif
+
 if len(g:gutentags_modules) > 0
     if s:uname != 'windows'
         Plug 'ludovicchabant/vim-gutentags'
@@ -63,12 +71,6 @@ if len(g:gutentags_modules) > 0
         Plug 'ludovicchabant/vim-gutentags'
         Plug 'skywind3000/gutentags_plus'
     endif
-endif
-
-" language server
-if g:load_coc_nvim
-    Plug 'neoclide/coc.nvim', {'branch': 'release'}
-    Plug 'honza/vim-snippets'
 endif
 
 " Debug
@@ -128,9 +130,13 @@ map <silent> <leader>d :<C-u>NERDTreeToggle<CR>
 
 " gtags
 let $GTAGSLABEL = 'native'
+if executable('pygmentize')
+    let $GTAGSLABEL = 'native-pygments'
+endif
 let $GTAGSCONF = expand('~/.local/share/gtags/gtags.conf')
 
 " gutentags
+let g:gutentags_define_advanced_commands = 1
 " gutentags 搜索工程目录的标志，碰到这些文件/目录名就停止向上一级目录递归
 let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
 " 所生成的数据文件的名称
@@ -155,7 +161,7 @@ let g:gutentags_plus_switch = 1
 " discription
 let g:which_key_map.c = {
     \ 'name' : '+tags',
-    \ 'g'    : 'looking for the difination.',
+    \ 'g'    : 'looking for the defination.',
     \ 's'    : 'looking for the reference.',
     \ 'c'    : 'looking for the callers of this function.',
     \ 'f'    : 'looking for the files.',
@@ -169,6 +175,9 @@ if g:load_coc_nvim
 endif
 
 " aireline
+if len(g:gutentags_modules) > 0
+    let g:airline#extensions#gutentags#enabled = 1
+endif
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#bufferline#enabled = 1
 let g:airline#extensions#tabline#show_tabs = 0
@@ -181,3 +190,8 @@ exec 'source' g:vim_path_in_dotfiles . '/short-cut.vim'
 " languages
 exec 'source' g:vim_path_in_dotfiles . '/language-common.vim'
 exec 'source' g:vim_path_in_dotfiles . '/golang.vim'
+
+" packadd! vimspector
+let g:vimspector_enable_mappings = 'HUMAN'
+nmap <silent> <leader>dl :call vimspector#Launch()<CR>
+nmap <silent> <leader>de :VimspectorReset<CR>

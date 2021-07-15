@@ -1,0 +1,52 @@
+{
+    "configurations": {
+        "run": {
+            "adapter": "vscode-go",
+            "configuration": {
+                "request": "launch",
+                "program": "${workspaceRoot}/${command:executable}",
+                "mode": "exec",
+                "dlvToolPath": "$GOPATH/bin/dlv"
+            }
+        },
+        "debug-main": {
+            "adapter": "vscode-go",
+            "configuration": {
+                "request": "launch",
+                "program": "${workspaceRoot}/main.go",
+                "mode": "debug",
+                "dlvToolPath": "$GOPATH/bin/dlv"
+            }
+        },
+        "attach": {
+            "adapter": "vscode-go",
+            "configuration": {
+                "request": "attach",
+                "program": "${fileDirname}",
+                "mode": "local",
+                "processId": "${command:pickGoProcess}",
+                "dlvToolPath": "$GOPATH/bin/dlv"
+            }
+        },
+        "remote": {
+            "adapter": "vscode-go",
+            "configuration": {
+                "request": "attach",
+                "mode": "remote",
+                "port":"${port}",
+                "host":"${host}",
+                "cwd": "${workspaceRoot}"
+            }
+        },
+        "test": {
+            "adapter": "vscode-go",
+            "configuration": {
+                "request": "launch",
+                "program": "${fileDirname}",
+                "args" : ["-test.run", "${command:testName}"],
+                "mode": "test",
+                "dlvToolPath": "$GOPATH/bin/dlv"
+            }
+        }
+    }
+}

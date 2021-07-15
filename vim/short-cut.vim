@@ -66,8 +66,8 @@ let g:which_key_map.j = {
             \ }
 
 " scroll
-nnoremap <silent> <S-k> <C-y>
-nnoremap <silent> <S-j> <C-e>
+nnoremap <silent> <S-k> 7k
+nnoremap <silent> <S-j> 7j
 
 " move on buffer
 nmap <silent> <S-h> <Space>bp
@@ -78,3 +78,18 @@ vmap <silent> <leader>y :w! ~/.vimbuffer<CR>
 nmap <silent> <leader>yy :.w! ~/.vimbuffer<CR>
 " " paste from buffer
 map <silent> <leader>p :r ~/.vimbuffer<CR>
+
+" word case convert
+"
+"let g:which_key_map.c = {
+"            \ 'name': '+case convert',
+"            \ 'rs': 'snake_case',
+"            \ 'rm': 'MixedCase',
+"            \ 'rc': 'camelCase',
+"            \ 'ru': 'UPPER_CASE',
+"            \ 'r-': 'dash-case',
+"            \ 'r.': 'dot.case',
+"            \ 'r<space>': 'space case',
+"            \ 'rt': 'Title Case',
+"            \ }
+
