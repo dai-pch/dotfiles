@@ -190,6 +190,7 @@ exec 'source' g:vim_path_in_dotfiles . '/short-cut.vim'
 " languages
 exec 'source' g:vim_path_in_dotfiles . '/language-common.vim'
 exec 'source' g:vim_path_in_dotfiles . '/golang.vim'
+exec 'source' g:vim_path_in_dotfiles . '/markdown.vim'
 
 " packadd! vimspector
 let g:vimspector_enable_mappings = 'HUMAN'
