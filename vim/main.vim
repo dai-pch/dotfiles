@@ -86,7 +86,7 @@ set nocompatible
 syntax on          " syntax highlight
 let g:solarized_termcolors=256
 set background=dark
-colorscheme solarized
+silent! colorscheme solarized
 " highlight Normal ctermfg=grey ctermbg=black
 set nu             " show row number
 set showcmd        " show input in normal mode
