@@ -13,7 +13,7 @@ curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
 add_to_file "$HOME/.vimrc" "\"##### Added by dotfiles bootstrap #####\nsource $DOTFILES_ROOT/$VIM_FILE"
 
 # install vim plugins
-vim +PlugInstall +qall
+vim +PlugInstall +qall 2>/dev/null
 
 # add vimspector configuration
 VIMSPECTOR_PATH="$HOME/.vim/bundle/vimspector"
