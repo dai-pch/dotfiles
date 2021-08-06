@@ -68,16 +68,22 @@ let g:which_key_map.j = {
 " scroll
 nnoremap <silent> <S-k> 7k
 nnoremap <silent> <S-j> 7j
+nnoremap <silent> <S-h> 7h
+nnoremap <silent> <S-l> 7l
 
 " move on buffer
-nmap <silent> <S-h> <Space>bp
-nmap <silent> <S-l> <Space>bn
+nmap <silent> <C-h> <Space>bp
+nmap <silent> <C-l> <Space>bn
+nmap <silent> <leader>h <C-w>bp
+nmap <silent> <leader>l <C-w>bn
 
 " copy to buffer
 vmap <silent> <leader>y :w! ~/.vimbuffer<CR>
 nmap <silent> <leader>yy :.w! ~/.vimbuffer<CR>
 " " paste from buffer
 map <silent> <leader>p :r ~/.vimbuffer<CR>
+" paste for replace
+map <silent> <leader>r mtciw<C-r>0<Esc>`t
 
 " word case convert
 "
