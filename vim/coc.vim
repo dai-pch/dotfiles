@@ -19,7 +19,7 @@ set shortmess+=c
 " diagnostics appear/become resolved.
 set signcolumn=yes
 
-call coc#add_extension('coc-go', 'coc-rust-analyzer') " , 'coc-tsserver')
+call coc#add_extension('coc-go', 'coc-rust-analyzer', 'coc-metals') " , 'coc-tsserver')
 
 let g:which_key_map.l = { 'name': '+language-server' }
 

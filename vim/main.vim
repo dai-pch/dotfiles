@@ -52,6 +52,7 @@ Plug 'liuchengxu/vim-which-key', {'on': ['WhichKey', 'WhichKey!', 'WhichKeyVisua
 Plug 'flazz/vim-colorschemes'
 Plug 'vim-airline/vim-airline'
 Plug 'tpope/vim-abolish'
+Plug 'junegunn/vim-easy-align'
 Plug 'moll/vim-bbye', {'on': ['Bdelete', 'Bwipeout']}
 Plug 'scrooloose/nerdtree',  { 'on': 'NERDTreeToggle' }
 Plug 'https://tpope.io/vim/fugitive.git'
@@ -190,6 +191,7 @@ exec 'source' g:vim_path_in_dotfiles . '/short-cut.vim'
 " languages
 exec 'source' g:vim_path_in_dotfiles . '/language-common.vim'
 exec 'source' g:vim_path_in_dotfiles . '/golang.vim'
+exec 'source' g:vim_path_in_dotfiles . '/scala.vim'
 exec 'source' g:vim_path_in_dotfiles . '/markdown.vim'
 
 " packadd! vimspector

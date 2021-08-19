@@ -68,6 +68,8 @@ let g:which_key_map.j = {
 " scroll
 nnoremap <silent> <S-k> 7k
 nnoremap <silent> <S-j> 7j
+vnoremap <silent> <S-k> 7k
+vnoremap <silent> <S-j> 7j
 
 " move on buffer
 nmap <silent> <S-h> <Space>bp
@@ -78,6 +80,10 @@ vmap <silent> <leader>y :w! ~/.vimbuffer<CR>
 nmap <silent> <leader>yy :.w! ~/.vimbuffer<CR>
 " " paste from buffer
 map <silent> <leader>p :r ~/.vimbuffer<CR>
+
+" align
+xmap ga <Plug>(EasyAlign)
+nmap ga <Plug>(EasyAlign)
 
 " word case convert
 "
