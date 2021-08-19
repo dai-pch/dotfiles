@@ -15,8 +15,14 @@ nnoremap <silent> g, g,zz
 
 " window
 nnoremap <leader>w <C-w>
+nmap <silent> <leader>h <C-w>h
+nmap <silent> <leader>j <C-w>j
+nmap <silent> <leader>k <C-w>k
+nmap <silent> <leader>l <C-w>l
 let g:which_key_map.w = {
             \ 'name': '+window',
+            \ }
+let g:which_key_map = {
             \ 'h'   : 'focus on the left window',
             \ 'l'   : 'focus on the right window',
             \ 'k'   : 'focus on the upward window',
@@ -57,29 +63,33 @@ let g:which_key_map.t = {
             \ }
 
 " jump
-nnoremap <leader>jp <C-o>
-nnoremap <leader>jn <C-i>
-let g:which_key_map.j = {
-            \ 'name': '+jump',
-            \ 'n': 'next',
-            \ 'p': 'previous',
-            \ }
+" nnoremap <leader>jp <C-o>
+" nnoremap <leader>jn <C-i>
+" let g:which_key_map.j = {
+"             \ 'name': '+jump',
+"             \ 'n': 'next',
+"             \ 'p': 'previous',
+"             \ }
 
 " scroll
 nnoremap <silent> <S-k> 7k
 nnoremap <silent> <S-j> 7j
+nnoremap <silent> <S-h> 7h
+nnoremap <silent> <S-l> 7l
 vnoremap <silent> <S-k> 7k
 vnoremap <silent> <S-j> 7j
 
 " move on buffer
-nmap <silent> <S-h> <Space>bp
-nmap <silent> <S-l> <Space>bn
+nmap <silent> <C-h> <Space>bp
+nmap <silent> <C-l> <Space>bn
 
 " copy to buffer
 vmap <silent> <leader>y :w! ~/.vimbuffer<CR>
 nmap <silent> <leader>yy :.w! ~/.vimbuffer<CR>
 " " paste from buffer
 map <silent> <leader>p :r ~/.vimbuffer<CR>
+" paste for replace
+map <silent> <leader>r mtciw<C-r>0<Esc>`t
 
 " align
 xmap ga <Plug>(EasyAlign)
@@ -99,3 +109,5 @@ nmap ga <Plug>(EasyAlign)
 "            \ 'rt': 'Title Case',
 "            \ }
 
+" quick fix
+" nnoremap <leader> :cclose<CR>

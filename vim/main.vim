@@ -31,11 +31,10 @@ endif
 
 " if have tags
 let g:gutentags_modules = []
-if executable('ctags')
-    let g:gutentags_modules += ['ctags']
-endif
 if executable('gtags-cscope') && executable('gtags')
     let g:gutentags_modules += ['gtags_cscope']
+elseif executable('ctags')
+    let g:gutentags_modules += ['ctags']
 endif
 
 " install coc.nvim only if node exists
@@ -134,7 +133,7 @@ let $GTAGSLABEL = 'native'
 if executable('pygmentize')
     let $GTAGSLABEL = 'native-pygments'
 endif
-let $GTAGSCONF = expand('~/.local/share/gtags/gtags.conf')
+let $GTAGSCONF = expand("$HOME/.local/share/gtags/gtags.conf")
 
 " gutentags
 let g:gutentags_define_advanced_commands = 1
