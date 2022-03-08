@@ -52,9 +52,13 @@ export CPLUS_INCLUDE_PATH="$(trim $CPLUS_INCLUDE_PATH ":")"
 CONFIGDIR="$DOTFILES_ROOT/config"
 CONFIGS="$(find $CONFIGDIR -maxdepth 1 -name "*.sh" |grep -ve "init.sh\|setup.sh")"
 CONFIGS="$(echo $CONFIGS | tr " " "\n" | sort -n -t "-")"
+if [ ! -z $ZSH_VERSION ]; then
+    CONFIGS=("${(f)CONFIGS}")
+fi
+
 for CONFIG_FILE in $CONFIGS
 do
-    source "$CONFIG_FILE"
+    source $CONFIG_FILE
 done
 
 # remove redundant items in PATH
