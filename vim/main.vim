@@ -40,7 +40,7 @@ endif
 " install coc.nvim only if node exists
 let g:load_coc_nvim = 0
 if executable('node')
-    let g:load_coc_nvim = 1
+    " let g:load_coc_nvim = 1
 endif
 
 " plugins

@@ -38,6 +38,9 @@ brew() {
     for formular in $FORMULARS; do
         if [[ ! $formular == "-"* ]]; then
             if [[ "install" == "$1" ]]; then
+                if [ -z "$LOCAL_PATH" ]; then
+                    mkdir -p $LOCAL_PATH
+                fi
                 if [ ! -x "$LOCAL_PATH/$formular" ]; then
                     ln -s "$BREW_PATH/$formular" "$LOCAL_PATH/$formular"
                     [ $? -eq 0 ] && echo Symlink created for $formular.
