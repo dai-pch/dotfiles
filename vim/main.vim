@@ -47,6 +47,7 @@ endif
 " let g:plug_url_format='git@github.com:%s.git'
 call plug#begin('~/.vim/bundle')
 " Plug ''
+Plug 'easymotion/vim-easymotion'
 Plug 'liuchengxu/vim-which-key', {'on': ['WhichKey', 'WhichKey!', 'WhichKeyVisual', 'WhichKeyVisual!']}
 Plug 'flazz/vim-colorschemes'
 Plug 'vim-airline/vim-airline'
