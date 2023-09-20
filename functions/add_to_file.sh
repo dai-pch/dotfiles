@@ -1,4 +1,8 @@
-# Add contents to certain file
+source "$(dirname "$BASH_SOURCE[0]")/../common.sh"
+
+# depends on add_to_file function
+source $DOTFILES_ROOT/utils/get_shell_type.sh
+
 add_to_file() {
     local CFG_CONTENTS=$2 # "##### Added by dotfiles bootstrap #####\nsource $DOTFILES_ROOT/$INIT_FILE"
     local TARGET_FILE=$1
@@ -17,5 +21,19 @@ add_to_file() {
     if [ -z "$FD" ]; then
         echo -e "${CFG_CONTENTS}\n" >> "$TARGET_FILE"
     fi
+}
+
+add_to_shrc() {
+    local CONTENTS=$1
+    case $(get_shell_type) in
+        bash*)
+            add_to_file "$HOME/.bashrc" "$CONTENTS"
+            ;;
+        zsh*)
+            add_to_file "$HOME/.zshrc" "$CONTENTS"
+            ;;
+        *)
+            echo "Unsupported shell type."
+    esac
 }
 
