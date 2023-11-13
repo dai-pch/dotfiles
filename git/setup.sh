@@ -11,6 +11,7 @@ if [ ! -z "$GIT_CMD" ]; then
     git config --global alias.co checkout 
     git config --global alias.ci commit 
     git config --global alias.br branch 
+    git config --global branch.sort -committerdate 
 
 #     if [ -z "$(git config --get user.email)" ]; then
 #         git config --global user.email="dpc_work@163.com"
