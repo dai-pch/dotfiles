@@ -5,10 +5,10 @@ TMPDIR="/tmp/saferm"
 if [ ! -e "$TARGET" ]; then
     mkdir -p $TMPDIR && cd $TMPDIR
     if [ ! -e "shell-safe-rm" ]; then
-        git clone https://github.com/nivekuil/rip
+        git clone https://github.com/kaelzhang/shell-safe-rm
     fi
-    cd rip
-    git checkout 0.13.1 > /dev/null
+    cd shell-safe-rm
+    git checkout 1.0.7 > /dev/null
     mkdir -p "$(dirname $TARGET)"
     cp ./bin/rm.sh $TARGET
 fi
