@@ -1,0 +1,26 @@
+[user]
+    name = daipengcheng
+    email = daipengcheng.sde@bytedance.com
+[url "ssh://daipengcheng.sde@git.byted.org:29418"]
+    insteadOf = https://git.byted.org
+[url "ssh://daipengcheng.sde@git.byted.org:29418"]
+    insteadOf = https://review.byted.org
+[url "git@code.byted.org:"]
+    insteadOf = https://code.byted.org/
+[url "git@github.com:"]
+    insteadOf = https://github.com/
+
+[core]
+    editor = vim
+[alias]
+    co = checkout
+    br = branch
+    ci = commit
+    st = status
+
+[pull]
+    rebase = false
+[branch]
+    sort = -committerdate
+[push]
+    autoSetupRemote = true
