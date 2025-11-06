@@ -3,13 +3,10 @@
 TARGET="$HOME/.local/bin/rm"
 TMPDIR="/tmp/saferm"
 if [ ! -e "$TARGET" ]; then
+    rm -rf $TMPDIR
     mkdir -p $TMPDIR && cd $TMPDIR
-    if [ ! -e "shell-safe-rm" ]; then
-        git clone https://github.com/nivekuil/rip
-    fi
-    cd rip
-    git checkout 0.13.1 > /dev/null
-    mkdir -p "$(dirname $TARGET)"
-    cp ./bin/rm.sh $TARGET
+    wget https://github.com/MilesCranmer/rip2/releases/download/v0.9.5/rip-Linux-x86_64-musl.tar.gz -O rip.tar.gz
+    tar -xf rip.tar.gz
+    cp ./rip $TARGET
 fi
 
