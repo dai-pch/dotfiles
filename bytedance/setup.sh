@@ -19,3 +19,6 @@ fi
 # install go proxy
 $DOTFILES_ROOT/bytedance/install_goproxy.sh
 
+# install kitex tool
+$DOTFILES_ROOT/bytedance/install_kitex.sh
+
