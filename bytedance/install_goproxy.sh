@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 CLI_FILE_PATH="$HOME/.local/bin/goproxy_setup_cli"
 
 if [ ! -f "$CLI_FILE_PATH" ]; then
