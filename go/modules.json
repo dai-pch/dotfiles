@@ -1,8 +1,8 @@
 [
     {
         "name": "go",
-        "probe": "tools.cmd_exist('go')",
-        "check": "tool.cmd_exist('curl')",
-        "run": "tool.exec_bash('setup.sh')"
+        "probe": "env.cmd_exists('go')",
+        "check": "env.cmd_exists('curl')",
+        "run": "env.exec_bash('setup.sh')"
     }
 ]

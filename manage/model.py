@@ -1,6 +1,7 @@
 from typing import NewType, Any, Optional
 from dataclasses import dataclass, field
 from abc import ABC, abstractmethod
+from copy import copy
 
 # types
 # 某个module相对于project root的相对路径
@@ -38,6 +39,15 @@ class ModuleDef:
 class RunConfig:
     required: bool = True # 如果为true，则会安装所有依赖模块，否则仅在依赖完整的情况下执行
     options: dict[str, Any] = field(default_factory=dict[str, Any])
+
+def merge_config(lhs: RunConfig, rhs: RunConfig) -> RunConfig:
+    res = copy(lhs)
+    res.required = res.required or rhs.required
+    for k, v in rhs.options.items():
+        if k in res.options and res.options[k] != v:
+            raise Exception("Merge config failed, options {} diff between {} and {}", k, res.options[k], v)
+        res.options[k] = v
+    return res
 
 @dataclass
 class Suite:

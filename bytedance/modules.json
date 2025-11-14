@@ -1,0 +1,13 @@
+[
+    {
+        "name": "bytedance.devbox",
+        "run": "env.exec_bash('set_gitconfig.sh')"
+    },
+    {
+        "name": "bytedance.goproxy",
+        "probe": "env.file_exists(home+'/.local/bin/goproxy_setup_cli')",
+        "depends_on": ["go"],
+        "check": "env.cmd_exists('mkdir') && env.cmd_exists(\"wget\") && env.cmd_exists('chmod')",
+        "run": "env.exec_bash('install_goproxy.sh')"
+    }
+]

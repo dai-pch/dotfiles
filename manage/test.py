@@ -1,5 +1,10 @@
 from module_sys import *
-from tools import Env
+from env import Env
+
+def unwrap[T](opt: Optional[T]) -> T:
+    if opt is None:
+        raise Exception("None value.")
+    return opt
 
 def main():
     # test_find_modules()
@@ -17,15 +22,21 @@ def test_calc_targets():
     project_root = ".."
     sys = ModuleSystem(CliLogger())
     sys.scan_modules(project_root)
-    config = Suite({ModuleId("bytedance.goproxy"): RunConfig(required=False)})
+    config = Suite({ModuleId("bytedance.goproxy"): RunConfig(required=True)})
     targets = sys.calc_run_targets(config)
-    assert(targets == set())
+    print(targets)
+    assert(targets == {
+        ModuleId('go'), 
+        ModuleId('bytedance.goproxy'),
+    })
 
 def test_run():
     project_root = ".."
     sys = ModuleSystem(CliLogger())
     sys.scan_modules(project_root)
-    suite = Suite({ModuleId("go"): RunConfig(required=True)})
+    suite = Suite({ModuleId("bytedance.goproxy"): RunConfig(required=True)})
+    targets = sys.calc_run_targets(suite)
+    print(targets)
     sys.run_suite(suite)
 
 def test_exec():
@@ -34,7 +45,7 @@ def test_exec():
         "logger": logger,
         "home": "aa",
     }
-    tools = Env(logger=logger)
+    tools = Env(home=unwrap(os.getenv("HOME")),logger=logger)
     loc: dict[str, Any] = {
         "tools": tools,
     }

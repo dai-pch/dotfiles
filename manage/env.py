@@ -1,9 +1,12 @@
 import subprocess
 from model import Logger
+from dataclasses import dataclass
+import os
 
+@dataclass
 class Env:
-    def __init__(self, logger: Logger):
-        self.logger = logger
+    logger: Logger
+    home: str
 
     def exec_bash(self, cmd: str) -> bool:
         res = subprocess.run(["bash", cmd], capture_output=True)
@@ -19,7 +22,7 @@ class Env:
             succ = False
         return succ
 
-    def cmd_exist(self, cmd: str) -> bool:
+    def cmd_exists(self, cmd: str) -> bool:
         res = subprocess.run(["which", cmd], capture_output=True)
         cmd_path = res.stdout.strip()
         # self.logger.info(f"Runing command which {cmd}.")
@@ -33,3 +36,7 @@ class Env:
         else:
             succ = False
         return succ
+
+    def file_exists(self, path: str) -> bool:
+        return os.path.exists(path)
+        

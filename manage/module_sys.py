@@ -4,7 +4,7 @@ import os
 from os import path
 from copy import copy
 from model import *
-from tools import Env
+from env import Env
 
 # consts 
 # EnvHome: Optional[str] = os.getenv("HOME")
@@ -92,21 +92,23 @@ class ModuleSystem:
             module for module in self._sorted_modules 
             if module in target_modules
         ]
-        # print(target_module_queue)
+        print(target_module_queue)
         for module in target_module_queue:
             self._logger.info("Installing module {}".format(module))
-            self.run_one(module, suite.run_set[module])
+            self.run_one(module, suite.run_set.get(module, RunConfig()).options)
 
-    def run_one(self, module_name: ModuleId, config: RunConfig):
+    def run_one(self, module_name: ModuleId, options: dict[str, Any] = dict()):
         module: Module = self._all_modules[module_name]
         # construct env
-        env = Env(logger=self._logger)
+        env = Env(home=self.home_path, logger=self._logger)
         context: dict[str, Any] = {
             "logger": self._logger,
             "home": self.home_path,
-            "tools": env,
+            "env": env,
         }
-        loc: dict[str, Any] = {}
+        loc: dict[str, Any] = {
+            **options
+        }
         # probe
         probe_expr = module.get_probe_expr()
         if probe_expr is not None and eval(probe_expr, globals=context, locals=loc):
@@ -130,12 +132,16 @@ class ModuleSystem:
             
     def record_installed(self, module_name: ModuleId):
         record_file_path: str = path.join(self.home_path, ModuleRecordFileName)
-        with open(record_file_path, mode="w+") as record_file: 
-            records: set[str] = {r.strip() for r in record_file.readlines()}
-            records.add(module_name)
-            record_list = list(records)
-            record_list.sort()
-            record_file.writelines(record_list)
+        try:
+            with open(record_file_path, mode="r+") as record_file: 
+                records: set[str] = {r.strip() for r in record_file.readlines()}
+        except FileNotFoundError:
+            records = set[str]()
+        if module_name in records:
+            return
+        with open(record_file_path, mode="a") as record_file: 
+            record_file.write(module_name)
+            record_file.write('\n')
 
     def calc_run_targets(self, config: Suite) -> set[ModuleId]:
         modules: set[ModuleId] = config.get_module_ids(True)
