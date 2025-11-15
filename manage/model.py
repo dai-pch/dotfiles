@@ -40,7 +40,9 @@ class RunConfig:
     required: bool = True # 如果为true，则会安装所有依赖模块，否则仅在依赖完整的情况下执行
     options: dict[str, Any] = field(default_factory=dict[str, Any])
 
-def merge_config(lhs: RunConfig, rhs: RunConfig) -> RunConfig:
+def merge_config(lhs: RunConfig, rhs: Optional[RunConfig]) -> RunConfig:
+    if rhs is None:
+        return lhs
     res = copy(lhs)
     res.required = res.required or rhs.required
     for k, v in rhs.options.items():
@@ -51,7 +53,8 @@ def merge_config(lhs: RunConfig, rhs: RunConfig) -> RunConfig:
 
 @dataclass
 class Suite:
-    module_set: dict[ModuleId, RunConfig]
+    modules: dict[ModuleId, RunConfig]
+    name: Optional[str] = None
 
     def get_module_ids(self, required: bool | None = None) -> set[ModuleId]:
         """获取模块名称列表：
@@ -59,9 +62,18 @@ class Suite:
            required 非None仅返回对应required字段与入参一致的模块
         """
         return {
-            id for id, item in self.module_set.items() 
-            if (required is None) or (item.required == required) 
+            id for id, cfg in self.modules.items() 
+            if (required is None) or (cfg.required == required) 
         }
+
+def merge_suite(lhs: Suite, rhs: Suite | None) -> Suite:
+    if rhs is None:
+        return lhs
+    res = copy(lhs)
+    res.name = None
+    for name, m in rhs.modules.items():
+        res.modules[name] = merge_config(m, res.modules.get(name))
+    return res
 
 @dataclass
 class RunEnv:

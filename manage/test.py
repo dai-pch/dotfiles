@@ -34,7 +34,8 @@ def test_run():
     suite = Suite({
         # ModuleId("git_config"): RunConfig(required=True),
         # ModuleId("bytedance.git_config"): RunConfig(required=True),
-        ModuleId("saferm"): RunConfig(required=True),
+        # ModuleId("saferm"): RunConfig(required=True),
+        ModuleId("go"): RunConfig(required=True),
         })
     targets = sys.calc_run_targets(suite)
     print(targets)

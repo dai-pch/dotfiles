@@ -17,7 +17,7 @@
     },
     {
         "name": "bytedance.kitex",
-        "probe": "env.cmd_exists('kitex') and False",
+        "probe": "env.cmd_exists('kitex')",
         "check": "env.cmd_exists('go')",
         "depends_on": ["go"],
         "run": "env.exec_bash('install_kitex.sh')"

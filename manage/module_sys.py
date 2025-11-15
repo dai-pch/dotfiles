@@ -99,10 +99,13 @@ class ModuleSystem:
         # print(target_module_queue)
         for module in target_module_queue:
             self._logger.info("Installing module {}".format(module))
-            if not self.run_one(module, suite.module_set.get(module, RunConfig()).options):
+            cfg = suite.modules.get(module, RunConfig())
+            succ = self.run_one(module, cfg)
+            if not succ and cfg.required:
                 return
 
-    def run_one(self, module_name: ModuleId, options: dict[str, Any] = dict()) -> bool:
+    def run_one(self, module_name: ModuleId, cfg: RunConfig) -> bool:
+        options: dict[str, Any] = cfg.options
         module: Module = self._all_modules[module_name]
         module_path = path.join(self.dotfiles_root, module.relative_path)
         # construct env
@@ -118,20 +121,21 @@ class ModuleSystem:
             "env": env,
             "dotfiles_root": self.dotfiles_root,
             "module_path": module_path,
-        }
-        loc: dict[str, Any] = {
             **options
         }
         # probe
         probe_expr = module.get_probe_expr()
-        if not exec_expr(probe_expr, glb=context, loc=loc):
+        if exec_expr(probe_expr, glb=context):
             self._logger.info("Module {} already satisfied.".format(module_name))
             self.record_installed(module_name)
             return True
         # check
         check_expr = module.get_check_expr()
-        if not exec_expr(check_expr, glb=context, loc=loc):
-            self._logger.warn("Module {} check failed, skipped.".format(module_name))
+        if not exec_expr(check_expr, glb=context):
+            if cfg.required:
+                self._logger.fatal(f"Module {module_name} check failed.")
+            else:
+                self._logger.warn(f"Module {module_name} check failed, skipped.")
             return False
         # mkdir temp dir
         current_dir = os.getcwd()
@@ -141,10 +145,14 @@ class ModuleSystem:
         # run
         run_success = False
         run_expr = module.get_run_expr()
-        run_success = exec_expr(run_expr, glb=context, loc=loc)
+        run_success = exec_expr(run_expr, glb=context)
         # record
         if not run_success:
-            self._logger.fatal("Module {} install failed.".format(module_name))
+            msg = f"Module {module_name} install failed."
+            if cfg.required:
+                self._logger.fatal(msg)
+            else:
+                self._logger.warn(msg)
         else:
             self.record_installed(module_name)
         os.chdir(current_dir)
@@ -285,7 +293,11 @@ class CliLogger(Logger):
     def fatal(self, msg: str):
         print("[Fatal] "+msg)
 
-def exec_expr(expr: Optional[Expr | list[Expr]], glb: dict[str, Any], loc: dict[str, Any]) -> Any:
+def exec_expr(
+        expr: Optional[Expr | list[Expr]], 
+        glb: dict[str, Any], 
+        loc: Optional[dict[str, Any]] = None,
+) -> Any:
     if expr is None:
         return True
     if isinstance(expr, list):

@@ -1,0 +1,36 @@
+[
+    {
+        "name": "basic",
+        "modules": {
+            "bootstrap": {
+                "required": true
+            },
+            "git_config": {
+                "required": true
+            },
+            "saferm": {
+                "required": true
+            },
+            "tmux": {
+                "required": false
+            }
+        }
+    },
+    {
+        "name": "bytedance",
+        "modules": {
+            "bytedance.env": {
+                "required": true
+            },
+            "bytedance.git_config": {
+                "required": true
+            },
+            "bytedance.goproxy": {
+                "required": false
+            },
+            "bytedance.kitex": {
+                "required": false
+            }
+        }
+    }
+]
