@@ -11,7 +11,7 @@
             "saferm": {
                 "required": true
             },
-            "tmux": {
+            "tmux_config": {
                 "required": false
             }
         }
