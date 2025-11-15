@@ -96,7 +96,7 @@ class ModuleSystem:
             module for module in self._sorted_modules 
             if module in target_modules
         ]
-        # print(target_module_queue)
+        self._logger.info(f"These modules will be installed: {target_module_queue}.")
         for module in target_module_queue:
             self._logger.info("Installing module {}".format(module))
             cfg = suite.modules.get(module, RunConfig())
