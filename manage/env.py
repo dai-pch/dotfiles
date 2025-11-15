@@ -3,7 +3,7 @@ from model import Logger
 from dataclasses import dataclass
 import os
 from os import path
-from typing import Optional
+from typing import Optional, Any
 
 @dataclass
 class Env:
@@ -85,7 +85,7 @@ class Env:
             file.writelines(lines)
         return True
 
-def _index_of[T](l: list[T], c: T) -> Optional[int]:
+def _index_of(l: list[Any], c: Any) -> Optional[int]:
     try:
         return l.index(c)
     except ValueError:

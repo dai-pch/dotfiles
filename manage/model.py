@@ -51,7 +51,7 @@ def merge_config(lhs: RunConfig, rhs: RunConfig) -> RunConfig:
 
 @dataclass
 class Suite:
-    run_set: dict[ModuleId, RunConfig]
+    module_set: dict[ModuleId, RunConfig]
 
     def get_module_ids(self, required: bool | None = None) -> set[ModuleId]:
         """获取模块名称列表：
@@ -59,7 +59,7 @@ class Suite:
            required 非None仅返回对应required字段与入参一致的模块
         """
         return {
-            id for id, item in self.run_set.items() 
+            id for id, item in self.module_set.items() 
             if (required is None) or (item.required == required) 
         }
 

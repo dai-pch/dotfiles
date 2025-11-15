@@ -13,15 +13,13 @@ def main():
     # test_exec()
 
 def test_find_modules():
-    project_root = ".."
     sys = ModuleSystem(CliLogger())
-    sys.scan_modules(project_root)
+    sys.scan_modules()
     sys.print()
 
 def test_calc_targets():
-    project_root = ".."
     sys = ModuleSystem(CliLogger())
-    sys.scan_modules(project_root)
+    sys.scan_modules()
     config = Suite({ModuleId("bytedance.goproxy"): RunConfig(required=True)})
     targets = sys.calc_run_targets(config)
     print(targets)
@@ -31,9 +29,8 @@ def test_calc_targets():
     })
 
 def test_run():
-    project_root = ".."
     sys = ModuleSystem(CliLogger())
-    sys.scan_modules(project_root)
+    sys.scan_modules()
     suite = Suite({
         # ModuleId("git_config"): RunConfig(required=True),
         # ModuleId("bytedance.git_config"): RunConfig(required=True),

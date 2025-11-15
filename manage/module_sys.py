@@ -9,7 +9,7 @@ from env import Env
 # consts 
 # EnvHome: Optional[str] = os.getenv("HOME")
 ModuleDefFileName: str = "modules.json"
-ModuleRecordFileName: str = ".dot_installed"
+ModuleRecordFileName: str = ".dotfile_installed"
 
 class Module:
     def __init__(self, module_def: ModuleDef, relative_path: RelativePath):
@@ -64,9 +64,9 @@ class ModuleSystem:
         self.home_path: str = home_path
         self.dotfiles_root: str = path.abspath(path.join(path.dirname(__file__), '..'))
 
-    def scan_modules(self, project_root: str):
-        for cur_path, _, filenames in os.walk(project_root):
-            rel_path: RelativePath = RelativePath(path.relpath(cur_path, start=project_root))
+    def scan_modules(self):
+        for cur_path, _, filenames in os.walk(self.dotfiles_root):
+            rel_path: RelativePath = RelativePath(path.relpath(cur_path, start=self.dotfiles_root))
             if ModuleDefFileName not in filenames:
                 continue
             modules: list[Module] = Module.parse_from_file(
@@ -84,6 +84,9 @@ class ModuleSystem:
         if len(remain) > 0:
             raise Exception(f"Fund cyclic dependenties between modules {remain}")
     
+    def get_all_modules(self) -> list[ModuleId]:
+        return list(self._all_modules.keys())
+
     def run_suite(self, suite: Suite):
         target_modules: set[ModuleId] = self.calc_run_targets(suite)
         if len(target_modules) == 0:
@@ -96,7 +99,7 @@ class ModuleSystem:
         # print(target_module_queue)
         for module in target_module_queue:
             self._logger.info("Installing module {}".format(module))
-            if not self.run_one(module, suite.run_set.get(module, RunConfig()).options):
+            if not self.run_one(module, suite.module_set.get(module, RunConfig()).options):
                 return
 
     def run_one(self, module_name: ModuleId, options: dict[str, Any] = dict()) -> bool:
@@ -290,4 +293,4 @@ def exec_expr(expr: Optional[Expr | list[Expr]], glb: dict[str, Any], loc: dict[
             if not exec_expr(e, glb, loc):
                 return False
         return True
-    return eval(expr, globals=glb, locals=loc)
+    return eval(expr, glb, loc)
