@@ -16,5 +16,5 @@ fi
 mkdir -p $DOTFILES_ROOT
 git clone --recursive $DOTFILES_URL $DOTFILES_ROOT
 # $DOTFILES_ROOT/setup_all.sh
-$DOTFILES_ROOT/manage/manage.py install
+$DOTFILES_ROOT/manage/manage.py install_suite basic
 
