@@ -1,13 +1,25 @@
 [
     {
-        "name": "bytedance.devbox",
-        "run": "env.exec_bash('set_gitconfig.sh')"
+        "name": "bytedance.env",
+        "run": "env.add_to_file(f'{home}/.bashrc', f'source {dotfiles_root}/bytedance/devbox.sh')"
+    },
+    {
+        "name": "bytedance.git_config",
+        "check": "env.cmd_exists('git')",
+        "run": "env.add_to_file(f'{home}/.gitconfig', ['[include]', f'    path = {module_path}/gitconfig'])"
     },
     {
         "name": "bytedance.goproxy",
-        "probe": "env.file_exists(home+'/.local/bin/goproxy_setup_cli')",
+        "probe": "env.file_exists(f'{home}/.local/bin/goproxy_setup_cli')",
         "depends_on": ["go"],
-        "check": "env.cmd_exists('mkdir') && env.cmd_exists(\"wget\") && env.cmd_exists('chmod')",
+        "check": "env.cmd_exists('mkdir') and env.cmd_exists(\"wget\") and env.cmd_exists('chmod')",
         "run": "env.exec_bash('install_goproxy.sh')"
+    },
+    {
+        "name": "bytedance.kitex",
+        "probe": "env.cmd_exists('kitex') and False",
+        "check": "env.cmd_exists('go')",
+        "depends_on": ["go"],
+        "run": "env.exec_bash('install_kitex.sh')"
     }
 ]

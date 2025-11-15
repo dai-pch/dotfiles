@@ -1,0 +1,7 @@
+[
+    {
+        "name": "git_config",
+        "check": "env.cmd_exists('git')",
+        "run": "env.add_to_file(f'{home}/.gitconfig', ['[include]', f'    path = {module_path}/gitconfig'])"
+    }
+]

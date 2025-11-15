@@ -1,0 +1,19 @@
+[
+    {
+        "name": "saferm",
+        "check": [
+            "env.cmd_exists('wget')", 
+            "env.cmd_exists('tar')"
+        ],
+        "run": [
+            "env.exec_cmd('wget https://github.com/MilesCranmer/rip2/releases/download/v0.9.5/rip-Linux-x86_64-musl.tar.gz -O rip.tar.gz')", 
+            "env.exec_cmd('tar -xf rip.tar.gz')", 
+            "env.exec_cmd(f'cp ./rip {home}/.local/bin/rm')"
+        ]
+    },
+    {
+        "name": "dummy",
+        "probe": "env.file_exists(f'{home}/.local/bin/rm')",
+        "run": "env.exec_bash('setup.sh')"
+    }
+]

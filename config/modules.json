@@ -1,0 +1,6 @@
+[
+    {
+        "name": "bootstrap",
+        "run": "env.add_to_file(f'{home}/.bashrc', f'source {module_path}/init.sh')"
+    }
+]

@@ -12,12 +12,12 @@ ModuleDefFileName: str = "modules.json"
 ModuleRecordFileName: str = ".dot_installed"
 
 class Module:
-    def __init__(self, module_def: ModuleDef, relative_path: RelPath):
+    def __init__(self, module_def: ModuleDef, relative_path: RelativePath):
         # TODO: check
         if len(module_def.name) == 0:
             raise Exception("module has no name")
         if len(relative_path) == 0:
-            relative_path = RelPath(".")
+            relative_path = RelativePath(".")
         # module_def.depend_modules = list(set(module_def.depend_modules))
         self._module_def = module_def
         self.relative_path = relative_path 
@@ -28,17 +28,17 @@ class Module:
     def get_dependent_modules(self) -> set[ModuleId]:
         return set(self._module_def.depends_on)
     
-    def get_check_expr(self) -> Optional[Expr]:
+    def get_check_expr(self) -> Optional[Expr | list[Expr]]:
         return self._module_def.check
     
     def get_probe_expr(self) -> Optional[Expr]:
         return self._module_def.probe
     
-    def get_run_expr(self) -> Optional[Expr]:
+    def get_run_expr(self) -> Optional[Expr | list[Expr]]:
         return self._module_def.run
     
     @classmethod
-    def parse_list_from_str(cls, module_def_str: str, relative_path: RelPath) -> list[Self]:
+    def parse_list_from_str(cls, module_def_str: str, relative_path: RelativePath) -> list[Self]:
         module_def_list: list[ModuleDef] = json.loads(
             module_def_str, 
             object_hook=lambda datas: [ModuleDef(**data) for data in datas],
@@ -47,7 +47,7 @@ class Module:
         return [cls(module_def, relative_path) for module_def in module_def_list] 
 
     @classmethod
-    def parse_from_file(cls, file_path: str, relative_path: RelPath) -> list[Self]:
+    def parse_from_file(cls, file_path: str, relative_path: RelativePath) -> list[Self]:
         with open(file_path) as module_file:
             module_data_list: list[dict[Any, Any]] = json.load(module_file)
             module_def_list: list[ModuleDef] = [ModuleDef(**data) for data in module_data_list]
@@ -61,11 +61,12 @@ class ModuleSystem:
         home_path: str | None = os.getenv("HOME")
         if home_path is None:
             raise Exception(f"Home directory not found.")
-        self.home_path = home_path
+        self.home_path: str = home_path
+        self.dotfiles_root: str = path.abspath(path.join(path.dirname(__file__), '..'))
 
     def scan_modules(self, project_root: str):
         for cur_path, _, filenames in os.walk(project_root):
-            rel_path: RelPath = RelPath(path.relpath(cur_path, start=project_root))
+            rel_path: RelativePath = RelativePath(path.relpath(cur_path, start=project_root))
             if ModuleDefFileName not in filenames:
                 continue
             modules: list[Module] = Module.parse_from_file(
@@ -92,43 +93,59 @@ class ModuleSystem:
             module for module in self._sorted_modules 
             if module in target_modules
         ]
-        print(target_module_queue)
+        # print(target_module_queue)
         for module in target_module_queue:
             self._logger.info("Installing module {}".format(module))
-            self.run_one(module, suite.run_set.get(module, RunConfig()).options)
+            if not self.run_one(module, suite.run_set.get(module, RunConfig()).options):
+                return
 
-    def run_one(self, module_name: ModuleId, options: dict[str, Any] = dict()):
+    def run_one(self, module_name: ModuleId, options: dict[str, Any] = dict()) -> bool:
         module: Module = self._all_modules[module_name]
+        module_path = path.join(self.dotfiles_root, module.relative_path)
         # construct env
-        env = Env(home=self.home_path, logger=self._logger)
+        env = Env(
+            self._logger,
+            self.dotfiles_root,
+            module_path,
+            module_name,
+        )
         context: dict[str, Any] = {
             "logger": self._logger,
             "home": self.home_path,
             "env": env,
+            "dotfiles_root": self.dotfiles_root,
+            "module_path": module_path,
         }
         loc: dict[str, Any] = {
             **options
         }
         # probe
         probe_expr = module.get_probe_expr()
-        if probe_expr is not None and eval(probe_expr, globals=context, locals=loc):
+        if not exec_expr(probe_expr, glb=context, loc=loc):
             self._logger.info("Module {} already satisfied.".format(module_name))
             self.record_installed(module_name)
             return True
         # check
         check_expr = module.get_check_expr()
-        if check_expr is not None:
-            if not eval(check_expr, globals=context, locals=loc):
-                self._logger.warn("Module {} check failed, skipped.".format(module_name))
-                return False
+        if not exec_expr(check_expr, glb=context, loc=loc):
+            self._logger.warn("Module {} check failed, skipped.".format(module_name))
+            return False
+        # mkdir temp dir
+        current_dir = os.getcwd()
+        workdir = path.join('/tmp/dotfiles', module_name)
+        os.makedirs(workdir, exist_ok=True)
+        os.chdir(workdir)
         # run
+        run_success = False
         run_expr = module.get_run_expr()
-        if run_expr is not None:
-            succ = eval(run_expr, globals=context, locals=loc)
-            if not succ:
-                self._logger.fatal("Module {} install failed.".format(module_name))
+        run_success = exec_expr(run_expr, glb=context, loc=loc)
         # record
-        self.record_installed(module_name)
+        if not run_success:
+            self._logger.fatal("Module {} install failed.".format(module_name))
+        else:
+            self.record_installed(module_name)
+        os.chdir(current_dir)
+        return run_success
             
     def record_installed(self, module_name: ModuleId):
         record_file_path: str = path.join(self.home_path, ModuleRecordFileName)
@@ -264,3 +281,13 @@ class CliLogger(Logger):
 
     def fatal(self, msg: str):
         print("[Fatal] "+msg)
+
+def exec_expr(expr: Optional[Expr | list[Expr]], glb: dict[str, Any], loc: dict[str, Any]) -> Any:
+    if expr is None:
+        return True
+    if isinstance(expr, list):
+        for e in expr:
+            if not exec_expr(e, glb, loc):
+                return False
+        return True
+    return eval(expr, globals=glb, locals=loc)

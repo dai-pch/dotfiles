@@ -34,7 +34,11 @@ def test_run():
     project_root = ".."
     sys = ModuleSystem(CliLogger())
     sys.scan_modules(project_root)
-    suite = Suite({ModuleId("bytedance.goproxy"): RunConfig(required=True)})
+    suite = Suite({
+        # ModuleId("git_config"): RunConfig(required=True),
+        # ModuleId("bytedance.git_config"): RunConfig(required=True),
+        ModuleId("saferm"): RunConfig(required=True),
+        })
     targets = sys.calc_run_targets(suite)
     print(targets)
     sys.run_suite(suite)
@@ -45,7 +49,12 @@ def test_exec():
         "logger": logger,
         "home": "aa",
     }
-    tools = Env(home=unwrap(os.getenv("HOME")),logger=logger)
+    tools = Env(
+        logger=logger,
+        dotfiles_root='..',
+        module_path='.',
+        module_name='test',
+    )
     loc: dict[str, Any] = {
         "tools": tools,
     }

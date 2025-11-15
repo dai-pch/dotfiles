@@ -5,7 +5,7 @@ from copy import copy
 
 # types
 # 某个module相对于project root的相对路径
-RelPath = NewType('RelPath', str)
+RelativePath = NewType('RelativePath', str)
 ModuleId = NewType('ModuleId', str)
 Expr = NewType('Expr', str)
 
@@ -32,8 +32,8 @@ class ModuleDef:
     name: ModuleId
     depends_on: list[ModuleId] = field(default_factory=list[ModuleId])
     probe: Optional[Expr] = None
-    check: Optional[Expr] = None
-    run: Optional[Expr] = None
+    check: Optional[Expr | list[Expr]] = None
+    run: Optional[Expr | list[Expr]] = None
 
 @dataclass
 class RunConfig:
@@ -66,7 +66,7 @@ class Suite:
 @dataclass
 class RunEnv:
     # env
-    home: str
+    HOME: str
     logger: Logger
     # state
     check_pass: bool = True

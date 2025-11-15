@@ -1,0 +1,17 @@
+[url "git@github.com:"]
+    insteadOf = https://github.com/
+
+[core]
+    editor = vim
+[alias]
+    co = checkout
+    br = branch
+    ci = commit
+    st = status
+
+[pull]
+    rebase = false
+[branch]
+    sort = -committerdate
+[push]
+    autoSetupRemote = true

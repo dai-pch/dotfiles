@@ -1,0 +1,7 @@
+[
+    {
+        "name": "tmux",
+        "check": "env.cmd_exists('tmux')",
+        "run": "env.add_to_file(f'{home}/.tmux.conf', f'source-file {module_path}/tmux.conf')"
+    }
+]
